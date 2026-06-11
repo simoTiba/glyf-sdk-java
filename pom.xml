@@ -11,7 +11,7 @@
 
     <name>GLYF Java SDK</name>
     <description>Official Java client for the GLYF bank-transaction enrichment API. Zero runtime dependencies.</description>
-    <url>https://github.com/getglyf/glyf-sdk-java</url>
+    <url>https://github.com/simoTiba/glyf-sdk-java</url>
 
     <licenses>
         <license>
@@ -30,9 +30,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/getglyf/glyf-sdk-java.git</connection>
-        <developerConnection>scm:git:ssh://github.com/getglyf/glyf-sdk-java.git</developerConnection>
-        <url>https://github.com/getglyf/glyf-sdk-java</url>
+        <connection>scm:git:git://github.com/simoTiba/glyf-sdk-java.git</connection>
+        <developerConnection>scm:git:ssh://github.com/simoTiba/glyf-sdk-java.git</developerConnection>
+        <url>https://github.com/simoTiba/glyf-sdk-java</url>
     </scm>
 
     <properties>

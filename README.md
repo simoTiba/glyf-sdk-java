@@ -167,7 +167,7 @@ volumes, batch throughput and SLA: see [pricing](https://getglyf.com/access).
 
 ## Support
 
-- Issues: [GitHub issues](https://github.com/getglyf/glyf-sdk-java/issues)
+- Issues: [GitHub issues](https://github.com/simoTiba/glyf-sdk-java/issues)
 - E-mail: [contact@getglyf.com](mailto:contact@getglyf.com)
 - Security reports: see [SECURITY.md](SECURITY.md)
 
