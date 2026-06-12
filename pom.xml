@@ -39,6 +39,10 @@
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.11.4</junit.version>
+        <!-- true (via release.sh) = publication Central sans clic dans le portail -->
+        <centralAutoPublish>false</centralAutoPublish>
+        <!-- 'published' avec autoPublish, sinon 'validated' (ne pas bloquer sur un clic manuel) -->
+        <centralWaitUntil>validated</centralWaitUntil>
     </properties>
 
     <!-- ZERO runtime dependency. Test-scope only — never shipped. -->
@@ -118,6 +122,8 @@
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
+                            <autoPublish>${centralAutoPublish}</autoPublish>
+                            <waitUntil>${centralWaitUntil}</waitUntil>
                         </configuration>
                     </plugin>
                 </plugins>
