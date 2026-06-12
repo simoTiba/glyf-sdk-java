@@ -1,5 +1,9 @@
 # GLYF Java SDK
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.getglyf/glyf-sdk)](https://central.sonatype.com/artifact/com.getglyf/glyf-sdk)
+[![CI](https://github.com/simoTiba/glyf-sdk-java/actions/workflows/ci.yml/badge.svg)](https://github.com/simoTiba/glyf-sdk-java/actions)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 Official Java client for the [GLYF](https://getglyf.com) **bank-transaction enrichment API** —
 turn raw bank statement labels like `CARTE 14/02 NETFLIX.COM CB*0000` into structured
 merchant data: clean name, logo, category, city and legal/registry information
@@ -27,7 +31,7 @@ Maven:
 Gradle:
 
 ```kotlin
-implementation("com.getglyf:glyf-sdk:0.1.0")
+implementation("com.getglyf:glyf-sdk:0.1.2")
 ```
 
 Requires **Java 17+**.
