@@ -3,6 +3,8 @@ package com.getglyf.sdk;
 import com.getglyf.sdk.internal.Json;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ProxySelector;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -37,7 +39,7 @@ import java.util.Objects;
 public final class GlyfClient {
 
     /** SDK version, sent as User-Agent. */
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.3";
 
     private static final String DEFAULT_BASE_URL = "https://api.getglyf.com";
     private static final int MAX_BATCH_SIZE = 1000;
@@ -55,10 +57,13 @@ public final class GlyfClient {
         this.requestTimeout = b.requestTimeout;
         this.maxRetries = b.maxRetries;
         this.batchSize = b.batchSize;
-        this.http = HttpClient.newBuilder()
+        HttpClient.Builder httpBuilder = HttpClient.newBuilder()
                 .connectTimeout(b.connectTimeout)
-                .followRedirects(HttpClient.Redirect.NORMAL)
-                .build();
+                .followRedirects(HttpClient.Redirect.NORMAL);
+        if (b.proxySelector != null) {
+            httpBuilder.proxy(b.proxySelector);
+        }
+        this.http = httpBuilder.build();
     }
 
     public static Builder builder() {
@@ -215,6 +220,7 @@ public final class GlyfClient {
         private Duration requestTimeout = Duration.ofSeconds(10);
         private int maxRetries = 3;
         private int batchSize = MAX_BATCH_SIZE;
+        private ProxySelector proxySelector;
 
         /** Your GLYF API key — get one free at <a href="https://getglyf.com/access">getglyf.com/access</a>. */
         public Builder apiKey(String apiKey) {
@@ -235,6 +241,23 @@ public final class GlyfClient {
 
         public Builder requestTimeout(Duration requestTimeout) {
             this.requestTimeout = requestTimeout;
+            return this;
+        }
+
+        /**
+         * Routes all SDK traffic through an HTTP(S) proxy — typical corporate
+         * setup ({@code proxy("proxy.bank.com", 3128)}). Without this, the JVM
+         * connects directly (system {@code https_proxy} env vars are ignored
+         * by Java's HttpClient).
+         */
+        public Builder proxy(String host, int port) {
+            this.proxySelector = ProxySelector.of(new InetSocketAddress(host, port));
+            return this;
+        }
+
+        /** Full control over proxy selection, e.g. {@link ProxySelector#getDefault()} to follow JVM system properties. */
+        public Builder proxy(ProxySelector proxySelector) {
+            this.proxySelector = proxySelector;
             return this;
         }
 

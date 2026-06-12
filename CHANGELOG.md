@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3 — 2026-06-12
+
+- **Corporate proxy support**: `GlyfClient.builder().proxy(host, port)` (or a full
+  `ProxySelector`) routes SDK traffic through an HTTP(S) proxy — Java's HttpClient
+  ignores `https_proxy` environment variables, which broke bank-workstation setups.
+- New README section: *Corporate proxy & TLS interception*.
+
+> 0.1.1 / 0.1.2 were build-infrastructure tags (JitPack JDK/wrapper); no API change.
+
 ## 0.1.0 — 2026-06-11
 
 First public release.

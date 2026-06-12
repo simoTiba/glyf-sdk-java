@@ -24,14 +24,14 @@ Maven:
 <dependency>
     <groupId>com.getglyf</groupId>
     <artifactId>glyf-sdk</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
 </dependency>
 ```
 
 Gradle:
 
 ```kotlin
-implementation("com.getglyf:glyf-sdk:0.1.2")
+implementation("com.getglyf:glyf-sdk:0.1.3")
 ```
 
 Requires **Java 17+**.
@@ -117,6 +117,28 @@ GlyfClient glyf = GlyfClient.builder()
         .requestTimeout(Duration.ofSeconds(15)) // default 10 s
         .build();
 ```
+
+### Corporate proxy & TLS interception
+
+Java's `HttpClient` ignores the `https_proxy` environment variables. On corporate
+workstations where outbound traffic must go through a proxy, configure it explicitly:
+
+```java
+GlyfClient glyf = GlyfClient.builder()
+        .apiKey(key)
+        .proxy("proxy.mycompany.com", 3128)
+        .build();
+```
+
+(or `.proxy(ProxySelector.getDefault())` to follow `-Dhttps.proxyHost/-Dhttps.proxyPort`
+JVM properties.)
+
+Two more corporate-network notes:
+- If the proxy answers **403 “Uncategorized”**, your security team needs to allow
+  `api.getglyf.com` (or the filter vendor needs to categorise it — contact us, we
+  track categorisation submissions).
+- If the proxy **intercepts TLS** (certificate re-signed by an internal CA), make
+  sure that CA is present in your JVM truststore (`cacerts`), as for any external API.
 
 ### Testing your integration — no network, no key
 

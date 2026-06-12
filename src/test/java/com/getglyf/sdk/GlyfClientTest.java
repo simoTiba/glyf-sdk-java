@@ -196,6 +196,24 @@ class GlyfClientTest {
         assertTrue(server.requests().get(1).body().contains("LABEL 2"));
     }
 
+    // ── Proxy ───────────────────────────────────────────────────────────
+
+    @Test
+    void proxyIsActuallyUsedForOutboundTraffic() {
+        // Proxy injoignable + serveur mock joignable : si l'option proxy est
+        // bien câblée, le trafic passe par le proxy → échec réseau attendu.
+        GlyfClient throughDeadProxy = GlyfClient.builder()
+                .apiKey("k")
+                .baseUrl(server.baseUrl())
+                .proxy("127.0.0.1", 1)
+                .maxRetries(0)
+                .requestTimeout(Duration.ofMillis(800))
+                .build();
+        assertThrows(GlyfNetworkException.class,
+                () -> throughDeadProxy.enrich(EnrichmentRequest.of("X", "FR")));
+        assertEquals(0, server.requests().size(), "le trafic ne doit pas contourner le proxy");
+    }
+
     // ── Builder guards ──────────────────────────────────────────────────
 
     @Test
